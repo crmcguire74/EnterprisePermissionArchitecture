@@ -1,127 +1,64 @@
-// Import required modules
-import * as d3 from 'd3';
+document.addEventListener('DOMContentLoaded', () => {
+    // Table of Contents elements
+    const toc = document.querySelector('.table-of-contents');
+    const tocToggle = document.querySelector('.toc-toggle');
+    const mainContent = document.querySelector('.col-lg-9');
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.table-of-contents a');
+    
+    // Toggle table of contents
+    tocToggle.addEventListener('click', () => {
+        toc.classList.toggle('collapsed');
+        const isCollapsed = toc.classList.contains('collapsed');
+        tocToggle.setAttribute('aria-expanded', !isCollapsed);
+    });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize navigation highlighting
-    initializeNavigation();
+    // Handle keyboard navigation
+    tocToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            tocToggle.click();
+        }
+    });
     
-    // Set up smooth scrolling for anchor links
-    setupSmoothScrolling();
-    
-    // Initialize tooltips, popovers, etc.
-    initializeBootstrapComponents();
-    
-    // Setup architecture diagram controls
-    setupDiagramControls();
-});
-
-// Function to initialize navigation highlighting
-function initializeNavigation() {
-    const sections = document.querySelectorAll('.section-container');
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    
-    window.addEventListener('scroll', function() {
-        let current = '';
+    const updateActiveSection = () => {
+        const scrollPosition = window.scrollY + 100; // Offset for header
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= (sectionTop - 100)) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
-}
-
-// Function to set up smooth scrolling for anchor links
-function setupSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
+            const sectionHeight = section.offsetHeight;
             
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70,
-                    behavior: 'smooth'
-                });
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                // Remove active class from all links
+                tocLinks.forEach(link => link.classList.remove('active'));
                 
-                // Update URL without page reload
-                history.pushState(null, null, targetId);
+                // Add active class to corresponding link
+                const correspondingLink = document.querySelector(`.table-of-contents a[href="#${section.id}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                }
+            }
+        });
+    };
+
+    // Update active section on scroll
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateActiveSection);
+    });
+    
+    // Smooth scroll for table of contents links
+    tocLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
-}
-
-// Function to initialize Bootstrap components
-function initializeBootstrapComponents() {
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
     
-    // Initialize popovers
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map(function(popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
-}
-
-// Function to setup architecture diagram controls
-function setupDiagramControls() {
-    const zoomIn = document.getElementById('zoom-in');
-    const zoomOut = document.getElementById('zoom-out');
-    const resetView = document.getElementById('reset-view');
-    
-    if (zoomIn && zoomOut && resetView) {
-        // These will be connected to the visualization.js SVG zoom functionality
-        zoomIn.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('diagram-zoom-in'));
-        });
-        
-        zoomOut.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('diagram-zoom-out'));
-        });
-        
-        resetView.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('diagram-reset-view'));
-        });
-    }
-    
-    // Setup visualization view switching
-    const viewButtons = document.querySelectorAll('.visualization-controls .btn');
-    viewButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            viewButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            const view = this.getAttribute('data-view');
-            window.dispatchEvent(new CustomEvent('change-visualization-view', {
-                detail: { view: view }
-            }));
-        });
-    });
-    
-    // Setup role selector for permission visualization
-    const roleSelector = document.getElementById('role-selector');
-    if (roleSelector) {
-        roleSelector.addEventListener('change', function() {
-            const selectedRole = this.value;
-            window.dispatchEvent(new CustomEvent('change-role-visualization', {
-                detail: { role: selectedRole }
-            }));
-        });
-    }
-}
-
+    // Initialize active section
+    updateActiveSection();
+});

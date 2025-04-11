@@ -22,27 +22,69 @@
                 <a class="navbar-brand" href="#">
                     <i class="bi bi-shield-lock"></i> Enterprise Permission Framework
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" href="#overview">Overview</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#migration">Migration Strategy</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#licensing">License Management</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#visualization">Visualizations</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#migration-tool">Migration Tool</a></li>
-                    </ul>
-                </div>
             </div>
         </nav>
     </header>
 
     <main class="container-fluid">
-        <!-- Overview Section -->
-        <section id="overview" class="section-container">
-            <div class="row">
+        <div class="row">
+            <!-- Table of Contents Sidebar -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <nav class="table-of-contents">
+                    <div class="toc-header">
+                        <h4>Contents</h4>
+                        <button class="btn btn-link toc-toggle" aria-expanded="true" aria-label="Toggle contents">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                    </div>
+                    <div class="toc-content">
+                        <ul>
+                            <li><a href="#overview">Overview</a>
+                                <ul>
+                                    <li><a href="#current-challenges">Current Challenges</a></li>
+                                    <li><a href="#our-solution">Our Solution</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#architecture">Architecture</a>
+                                <ul>
+                                    <li><a href="#rbac-structure">RBAC Structure</a></li>
+                                    <li><a href="#entra-integration">Entra ID Integration</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#migration">Migration Strategy</a>
+                                <ul>
+                                    <li><a href="#migration-approach">Migration Approach</a></li>
+                                    <li><a href="#best-practices">Best Practices</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#licensing">License Management</a>
+                                <ul>
+                                    <li><a href="#license-strategy">Strategy</a></li>
+                                    <li><a href="#license-integration">Entra ID Integration</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#visualization">Visualizations</a>
+                                <ul>
+                                    <li><a href="#architecture-viz">Architecture View</a></li>
+                                    <li><a href="#permission-viz">Permission Inheritance</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#migration-tool">Migration Tool</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Overview Section -->
+                <section id="overview" class="section-container">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>Overview</h2>
+                        </div>
+                    </div>
+            <div class="row equal-height">
                 <div class="col-lg-8">
                     <h1>Enterprise Permission Architecture Redesign</h1>
                     <p class="lead">A comprehensive approach to organizing permissions, roles, and licenses within a financial services firm.</p>
@@ -94,10 +136,13 @@
                             <div class="stat-label">Decrease in license management effort</div>
                         </div>
                     </div>
-                    
-                    <div class="card mt-4">
-                        <div class="card-header bg-primary text-white">
-                            <h3>Get Started</h3>
+                 
+
+                    <div class="section-container" style="margin-top:10px;">
+                        <div class="section-title-bar" style="border-radius: 10px;">
+                            <div class="container-fluid">
+                                <h2>Quick Start</h2>
+                            </div>
                         </div>
                         <div class="card-body">
                             <p>Navigate through the sections to learn about the new permission architecture and how to migrate effectively.</p>
@@ -111,10 +156,20 @@
             </div>
         </section>
 
-        <!-- Architecture Section -->
-        <section id="architecture" class="section-container">
-            <h2>Permission Architecture Design</h2>
-            <div class="row">
+                <!-- Architecture Section -->
+                <section id="architecture" class="section-container">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>Permission Architecture Design</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Architecture</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+            <div class="row equal-height">
                 <div class="col-lg-7">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -164,9 +219,9 @@
                             <!-- SVG diagram will be inserted here by JavaScript -->
                         </div>
                         <div class="diagram-controls mt-3">
-                            <button id="zoom-in" class="btn btn-sm btn-outline-secondary"><i class="bi bi-zoom-in"></i></button>
-                            <button id="zoom-out" class="btn btn-sm btn-outline-secondary"><i class="bi bi-zoom-out"></i></button>
-                            <button id="reset-view" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrows-fullscreen"></i></button>
+                            <button id="zoom-in" class="btn btn-sm btn-outline-secondary" aria-label="Zoom in"><i class="bi bi-zoom-in"></i></button>
+                            <button id="zoom-out" class="btn btn-sm btn-outline-secondary" aria-label="Zoom out"><i class="bi bi-zoom-out"></i></button>
+                            <button id="reset-view" class="btn btn-sm btn-outline-secondary" aria-label="Reset view"><i class="bi bi-arrows-fullscreen"></i></button>
                         </div>
                         <div class="diagram-legend mt-3">
                             <div class="legend-item">
@@ -211,10 +266,20 @@
             </div>
         </section>
         
-        <!-- Migration Strategy Section -->
-        <section id="migration" class="section-container">
-            <h2>Migration Strategy</h2>
-            <div class="row">
+                <!-- Migration Strategy Section -->
+                <section id="migration" class="section-container">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>Migration Strategy</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Migration Strategy</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+            <div class="row equal-height">
                 <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -409,9 +474,19 @@
             </div>
         </section>
         
-        <!-- License Management Section -->
-        <section id="licensing" class="section-container">
-            <h2>License Management Framework</h2>
+                <!-- License Management Section -->
+                <section id="licensing" class="section-container license-management-section">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>License Management Framework</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">License Management</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card mb-4">
@@ -555,7 +630,7 @@
                         </div>
                     </div>
                     
-                    <div class="card">
+                    <div class="card optimization-section">
                         <div class="card-header">
                             <h3>License Optimization Strategies</h3>
                         </div>
@@ -604,9 +679,19 @@
             </div>
         </section>
         
-        <!-- Visualization Section -->
-        <section id="visualization" class="section-container">
-            <h2>Interactive Architecture Visualization</h2>
+                <!-- Visualization Section -->
+                <section id="visualization" class="section-container">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>Interactive Architecture Visualization</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Visualizations</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card mb-4">
@@ -614,9 +699,9 @@
                             <h3>Enterprise Permission Architecture</h3>
                             <div class="visualization-controls">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-outline-primary active" data-view="overview">Overview</button>
-                                    <button type="button" class="btn btn-outline-primary" data-view="detailed">Detailed</button>
-                                    <button type="button" class="btn btn-outline-primary" data-view="licensing">Licensing</button>
+                                    <button type="button" class="btn btn-outline-primary active" data-view="overview" aria-label="View overview visualization">Overview</button>
+                                    <button type="button" class="btn btn-outline-primary" data-view="detailed" aria-label="View detailed visualization">Detailed</button>
+                                    <button type="button" class="btn btn-outline-primary" data-view="licensing" aria-label="View licensing visualization">Licensing</button>
                                 </div>
                             </div>
                         </div>
@@ -697,9 +782,19 @@
             </div>
         </section>
         
-        <!-- Migration Tool Section -->
-        <section id="migration-tool" class="section-container">
-            <h2>Interactive Migration Tool</h2>
+                <!-- Migration Tool Section -->
+                <section id="migration-tool" class="section-container">
+                    <div class="section-title-bar">
+                        <div class="container-fluid">
+                            <h2>Interactive Migration Tool</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Migration Tool</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
@@ -807,6 +902,8 @@
                 </div>
             </div>
         </section>
+            </div>
+        </div>
     </main>
 
     <footer class="footer mt-auto py-3">
