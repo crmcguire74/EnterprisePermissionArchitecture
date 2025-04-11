@@ -6,6 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section[id]');
     const tocLinks = document.querySelectorAll('.table-of-contents a');
     
+    // Visualization view buttons
+    const viewButtons = document.querySelectorAll('.visualization-controls .btn-group .btn');
+    viewButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            // Dispatch event to update visualization
+            window.dispatchEvent(new CustomEvent('change-visualization-view', {
+                detail: { view: button.getAttribute('data-view') }
+            }));
+        });
+    });
+    
     // Toggle table of contents
     tocToggle.addEventListener('click', () => {
         toc.classList.toggle('collapsed');

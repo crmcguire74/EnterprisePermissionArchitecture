@@ -45,6 +45,7 @@ body {
     z-index: 1030;
     border-radius: 0;
     overflow-y: hidden;
+    transform: translateX(0);
 }
 
 @media (max-width: 991.98px) {
@@ -73,6 +74,13 @@ body {
     padding: 1rem 0.5rem;
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
     box-shadow: var(--card-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.table-of-contents.collapsed .toc-toggle:hover {
+    background: var(--secondary-color);
+    transform: translateY(-50%) scale(1.1);
 }
 
 .toc-header {
@@ -135,13 +143,42 @@ body {
     padding-left: 1.5rem;
 }
 
-.table-of-contents a {
+/* Parent menu items */
+.table-of-contents > .toc-content > ul > li > a {
+    display: block;
+    padding: 0.5rem 0;
+    color: var(--gray-900);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid var(--gray-200);
+    margin-bottom: 0.5rem;
+}
+
+/* Child menu items */
+.table-of-contents ul ul a {
     display: block;
     padding: 0.25rem 0;
     color: var(--gray-700);
     font-size: 0.9rem;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.2s;
+    position: relative;
+    padding-left: 0.75rem;
+}
+
+.table-of-contents ul ul a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--gray-400);
+    transition: background-color 0.2s;
 }
 
 .table-of-contents a:hover,
@@ -149,32 +186,9 @@ body {
     color: var(--primary-color);
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--gray-900);
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color var(--transition-speed);
-}
-
-a:hover {
-    color: var(--secondary-color);
-}
-
-/* Navigation */
-.navbar {
+.table-of-contents ul ul a:hover::before,
+.table-of-contents ul ul a.active::before {
     background-color: var(--primary-color);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-    font-weight: 600;
-    font-size: 1.25rem;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -648,6 +662,21 @@ body.nav-open {
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius);
     overflow: hidden;
+}
+
+.visualization-controls .btn-group .btn {
+    transition: all 0.3s ease;
+}
+
+.visualization-controls .btn-group .btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.visualization-controls .btn-group .btn:not(.active):hover {
+    background-color: var(--gray-200);
+    border-color: var(--gray-300);
 }
 
 .visualization-legend {
