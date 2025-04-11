@@ -1135,7 +1135,7 @@ function initOnboardingVisualization() {
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .attr('fill', '#dc3545')
-        .text('Current:');
+        .text('Currenddd:');
 
     // New process title
     svg.append('text')
