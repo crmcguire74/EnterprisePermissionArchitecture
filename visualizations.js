@@ -93,7 +93,7 @@ function initArchitectureDiagram() {
     
     // Add node labels
     nodeGroups.append('text')
-        .attr('dy', 5)
+        .attr('dy', 0)
         .attr('text-anchor', 'middle')
         .attr('fill', 'white')
         .style('font-weight', 'bold')
@@ -109,7 +109,7 @@ function initArchitectureDiagram() {
     ];
     
     nodeGroups.append('text')
-        .attr('dy', 25)
+        .attr('dy', 15)
         .attr('text-anchor', 'middle')
         .attr('fill', 'white')
         .attr('font-size', 10)
