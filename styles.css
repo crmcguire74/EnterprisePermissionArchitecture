@@ -314,6 +314,15 @@ body.nav-open {
     flex-direction: column;
 }
 
+.card-variableHeight {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Make card-body fill remaining vertical space */
 .card-body {
     flex: 1 1 auto;
