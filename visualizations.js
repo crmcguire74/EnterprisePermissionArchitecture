@@ -1027,30 +1027,45 @@ function initOnboardingVisualization() {
         // Stage name
         svg.append('text')
             .attr('x', step.x)
-            .attr('y', height * 0.5 - 20)
+            .attr('y', height * 0.5 - 35)
             .attr('text-anchor', 'middle')
             .attr('font-weight', 'bold')
             .attr('font-size', 12)
             .text(step.stage);
         
+
+
+
+        
         // Current process (above the line)
+        if (i%2 === 0) {
         svg.append('text')
             .attr('x', step.x)
-            .attr('y', height * 0.35)
+            .attr('y', height * 0.30)
             .attr('text-anchor', 'middle')
             .attr('fill', '#dc3545')
             .attr('font-size', 11)
             .text(step.old);
+        } else {
+            svg.append('text')
+            .attr('x', step.x)
+            .attr('y', height * 0.25)
+            .attr('text-anchor', 'middle')
+            .attr('fill', '#dc3545')
+            .attr('font-size', 11)
+            .text(step.old);
+            }
         
         svg.append('text')
             .attr('x', step.x)
-            .attr('y', height * 0.35 + 15)
+            .attr('y', height * 0.35 + 30)
             .attr('text-anchor', 'middle')
             .attr('fill', '#dc3545')
             .attr('font-size', 10)
             .text(step.oldTime);
         
         // New process (below the line)
+        if (i%2 === 0) {
         svg.append('text')
             .attr('x', step.x)
             .attr('y', height * 0.65)
@@ -1058,20 +1073,22 @@ function initOnboardingVisualization() {
             .attr('fill', '#198754')
             .attr('font-size', 11)
             .text(step.new);
-        
+        }
+        else {
         svg.append('text')
             .attr('x', step.x)
             .attr('y', height * 0.65 + 15)
             .attr('text-anchor', 'middle')
-            .attr('fill', '#198754')
-            .attr('font-size', 10)
+            .attr('fill', '#198754') 
+            .attr('font-size', 11)
             .text(step.newTime);
+        }
     });
     
     // Old process title
     svg.append('text')
         .attr('x', width * 0.05)
-        .attr('y', height * 0.35)
+        .attr('y', 50)
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .attr('fill', '#dc3545')
@@ -1080,7 +1097,7 @@ function initOnboardingVisualization() {
     // New process title
     svg.append('text')
         .attr('x', width * 0.05)
-        .attr('y', height * 0.65)
+        .attr('y', 325)
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .attr('fill', '#198754')
