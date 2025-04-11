@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
         toc.classList.toggle('collapsed');
         const isCollapsed = toc.classList.contains('collapsed');
         tocToggle.setAttribute('aria-expanded', !isCollapsed);
+        
+        // Force layout recalculation
+        mainContent.style.width = isCollapsed ? `calc(100% - 40px)` : `calc(100% - 280px)`;
+        mainContent.style.marginLeft = isCollapsed ? '40px' : '280px';
     });
 
     // Handle keyboard navigation
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateActiveSection);
     });
     
-    // Smooth scroll for table of contents links
+    // Smooth scroll for table of contents links and highlight active sections
     tocLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -70,6 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active states for all links
+                tocLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // If it's a child link, also highlight parent
+                const parentLi = link.closest('ul').closest('li');
+                if (parentLi) {
+                    const parentLink = parentLi.querySelector('a');
+                    if (parentLink) {
+                        parentLink.classList.add('active');
+                    }
+                }
             }
         });
     });

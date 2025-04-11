@@ -32,6 +32,12 @@ body {
     scroll-padding-top: 80px; /* Account for sticky header when scrolling to anchors */
 }
 
+.sticky-top {
+    background-color: #204a6be3;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+}
+
 /* Table of Contents */
 .table-of-contents {
     position: fixed;
@@ -44,89 +50,112 @@ body {
     margin: 0;
     z-index: 1030;
     border-radius: 0;
-    overflow-y: hidden;
+    overflow: visible;
     transform: translateX(0);
 }
 
-@media (max-width: 991.98px) {
-    .table-of-contents {
-        transform: translateX(-280px);
-    }
-    
-    .table-of-contents:not(.collapsed) {
-        transform: translateX(0);
-    }
-}
-
-@media (min-width: 992px) {
-    .table-of-contents.collapsed {
-        transform: translateX(-280px);
-    }
-}
-
-.table-of-contents.collapsed .toc-toggle {
-    position: fixed;
+.table-of-contents.collapsed {
+    width: 48px;
+    transform: none !important;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
     background: var(--primary-color);
+}
+
+.toc-toggle {
     color: white;
-    padding: 1rem 0.5rem;
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
-    box-shadow: var(--card-shadow);
+    width: 48px;
+    height: 48px;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1031;
+    font-size: 1.2em;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.table-of-contents.collapsed .toc-toggle:hover {
-    background: var(--secondary-color);
-    transform: translateY(-50%) scale(1.1);
+.toc-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.toc-toggle:hover {
+    background: rgba(208, 217, 192, 0.1);
+}
+
+.toc-toggle:hover i {
+    color: rgb(14, 43, 64) !important;
+}
+
+
+.table-of-contents:not(.collapsed) .toc-toggle i {
+    transform: rotate(-180deg);
+}
+
+.table-of-contents .toc-content {
+    padding: 1rem;
+    height: calc(100vh - 48px);
+    overflow-y: auto;
 }
 
 .toc-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     background: var(--primary-color);
     color: white;
+    position: relative;
+    height: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .toc-header h4 {
     margin: 0;
     color: white;
+    font-size: 1.1em;
+    font-weight: 500;
 }
 
-.toc-toggle {
-    color: white;
-    padding: 0;
-    transition: transform 0.3s ease;
+.table-of-contents.collapsed .toc-content {
+    opacity: 0;
 }
 
-.toc-toggle:hover {
-    color: rgba(255, 255, 255, 0.8);
+.table-of-contents.collapsed .toc-header {
+    opacity: 1;
 }
 
-.table-of-contents:not(.collapsed) .toc-toggle {
-    transform: rotate(180deg);
+.table-of-contents.collapsed .toc-header h4 {
+    opacity: 0;
 }
 
-.table-of-contents .toc-content {
-    padding: 1rem;
-    height: calc(100% - 60px);
-    overflow-y: auto;
-}
-
-/* Adjust main content when nav is expanded */
+/* Adjust main content when nav is expanded/collapsed */
 .col-lg-9 {
     transition: margin-left 0.3s ease, width 0.3s ease;
     margin-left: 280px;
     width: calc(100% - 280px);
 }
 
-.table-of-contents.collapsed + .col-lg-9 {
-    margin-left: 0;
-    width: 100%;
+.table-of-contents.collapsed ~ .col-lg-9 {
+    margin-left: 48px;
+    width: calc(100% - 48px);
+}
+
+@media (max-width: 991.98px) {
+    .col-lg-9 {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .table-of-contents.collapsed ~ .col-lg-9 {
+        margin-left: 40px;
+        width: calc(100% - 40px);
+    }
 }
 
 .table-of-contents ul {
@@ -662,6 +691,16 @@ body.nav-open {
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius);
     overflow: hidden;
+}
+
+.btn {
+    top:.5px; 
+    border-radius: 25px 0px 0px 25px;
+    background-color: #0e2947;
+}
+
+.btn:hover {
+    background-color: #8fb6e3;
 }
 
 .visualization-controls .btn-group .btn {
