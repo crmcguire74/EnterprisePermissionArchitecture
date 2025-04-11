@@ -703,6 +703,20 @@ body.nav-open {
     background-color: #8fb6e3;
 }
 
+.btn-primary {
+    border-radius: 5px;
+    width:200px;
+    justify-content: center;
+}
+
+.btn-outline-primary {
+    justify-content: center;
+}
+
+.d-grid {
+    justify-content: center;
+}
+
 .visualization-controls .btn-group .btn {
     transition: all 0.3s ease;
 }
