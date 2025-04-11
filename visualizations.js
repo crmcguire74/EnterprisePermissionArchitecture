@@ -1027,63 +1027,122 @@ function initOnboardingVisualization() {
         // Stage name
         svg.append('text')
             .attr('x', step.x)
-            .attr('y', height * 0.5 - 20)
+            .attr('y', height * 0.5 - 35) // Moved further up
             .attr('text-anchor', 'middle')
             .attr('font-weight', 'bold')
             .attr('font-size', 12)
             .text(step.stage);
-        
-        // Current process (above the line)
+
+        // Define positions and offsets
+        const wrapWidth = width * 0.12; // Keep adjusted wrap width
+        const oldTextY = height * 0.15; // Position Current block even higher
+        const newTextY = height * 0.85; // Position New block even lower
+        const timeYOffset = 30; // Keep increased offset for time labels
+        const lineStartY = height * 0.5;
+        const oldLineEndY = oldTextY - 5; // Adjust connector end based on new oldTextY
+        // Define positions and offsets (Connector lines removed)
+        const wrapWidth = width * 0.12; // Keep adjusted wrap width
+        const oldTextY = height * 0.15; // Position Current block even higher
+        const newTextY = height * 0.85; // Position New block even lower
+        const timeYOffset = 30; // Keep increased offset for time labels
+        // NOTE: Variables wrapWidth, oldTextY, newTextY, timeYOffset are defined above the loop now.
+
+        // Helper function for text wrapping (adjusts internal x)
+        function wrap(text, width, xPos) { // Added xPos parameter
+            text.each(function() {
+                var text = d3.select(this),
+                    words = text.text().split(/\s+/).reverse(),
+                    word,
+                    line = [],
+                    lineNumber = 0,
+                    lineHeight = 1.1, // ems
+                    // x = text.attr("x"), // Use passed xPos instead
+                    y = text.attr("y"),
+                    dy = 0, // Adjust dy based on font size or desired spacing
+                    tspan = text.text(null)
+                                .append("tspan")
+                                .attr("x", xPos) // Use passed xPos
+                                .attr("y", y)
+                                .attr("dy", dy + "em");
+                while (word = words.pop()) {
+                    line.push(word);
+                    tspan.text(line.join(" "));
+                    if (tspan.node().getComputedTextLength() > width) {
+                        line.pop();
+                        tspan.text(line.join(" "));
+                        line = [word];
+                        tspan = text.append("tspan")
+                                    .attr("x", xPos) // Use passed xPos
+                                    .attr("y", y)
+                                    .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                    .text(word);
+                    }
+                }
+                // // Center the block of text vertically (Removed this logic)
+                // const numLines = text.selectAll("tspan").size();
+                // if (numLines > 1) {
+                //     text.selectAll("tspan").attr("dy", function(d, i) {
+                //         // Calculate the initial offset to center the block
+                //         const initialOffset = - (numLines - 1) * lineHeight / 2;
+                //         return (initialOffset + i * lineHeight) + "em";
+                //     });
+                // }
+            });
+        }
+
+        // Current process
         svg.append('text')
-            .attr('x', step.x)
-            .attr('y', height * 0.35)
-            .attr('text-anchor', 'middle')
+            .attr('x', step.x + 12) // Offset X
+            .attr('y', oldTextY)
+            .attr('text-anchor', 'start') // Anchor start
             .attr('fill', '#dc3545')
-            .attr('font-size', 11)
-            .text(step.old);
-        
+            .attr('font-size', 10) // Keep font size
+            .text(step.old)
+            .call(wrap, wrapWidth, step.x + 12); // Apply wrapping with adjusted x
+
         svg.append('text')
-            .attr('x', step.x)
-            .attr('y', height * 0.35 + 15)
-            .attr('text-anchor', 'middle')
+            .attr('x', step.x + 12) // Offset X
+            .attr('y', oldTextY + timeYOffset)
+            .attr('text-anchor', 'start') // Anchor start
             .attr('fill', '#dc3545')
-            .attr('font-size', 10)
+            .attr('font-size', 9) // Keep font size
             .text(step.oldTime);
-        
-        // New process (below the line)
+
+        // New process
         svg.append('text')
-            .attr('x', step.x)
-            .attr('y', height * 0.65)
-            .attr('text-anchor', 'middle')
+            .attr('x', step.x + 12) // Offset X
+            .attr('y', newTextY)
+            .attr('text-anchor', 'start') // Anchor start
             .attr('fill', '#198754')
-            .attr('font-size', 11)
-            .text(step.new);
-        
+            .attr('font-size', 10) // Keep font size
+            .text(step.new)
+            .call(wrap, wrapWidth, step.x + 12); // Apply wrapping with adjusted x
+
         svg.append('text')
-            .attr('x', step.x)
-            .attr('y', height * 0.65 + 15)
-            .attr('text-anchor', 'middle')
+            .attr('x', step.x + 12) // Offset X
+            .attr('y', newTextY + timeYOffset)
+            .attr('text-anchor', 'start') // Anchor start
             .attr('fill', '#198754')
-            .attr('font-size', 10)
+            .attr('font-size', 9) // Increased font size
             .text(step.newTime);
     });
-    
+
+    // Titles
     // Old process title
     svg.append('text')
         .attr('x', width * 0.05)
-        .attr('y', height * 0.35)
+        .attr('y', height * 0.15) // Align with new Current block Y
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .attr('fill', '#dc3545')
         .text('Current:');
-    
+
     // New process title
     svg.append('text')
         .attr('x', width * 0.05)
-        .attr('y', height * 0.65)
+        .attr('y', height * 0.85) // Align with new New block Y
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .attr('fill', '#198754')
         .text('New:');
 }
-
